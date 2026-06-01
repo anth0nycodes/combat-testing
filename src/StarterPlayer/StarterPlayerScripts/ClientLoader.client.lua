@@ -5,7 +5,6 @@ local RS = game:GetService("ReplicatedStorage")
 
 -- UI
 local UI = require(RS.UI)
-local MainMenu = require(RS.UI.Menus.MainMenu)
 -- TODO: initialize client modules once play clicked is true
 
 UI()

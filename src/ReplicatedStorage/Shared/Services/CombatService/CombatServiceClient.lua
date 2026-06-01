@@ -1,8 +1,9 @@
 --!strict
-local CombatServiceClient: Types.CombatServiceClientType = {}
 
 -- Types
 local Types = require(script.Parent.Types)
+
+local CombatServiceClient = {} :: Types.CombatServiceClientType
 
 -- Game Services
 local RS = game:GetService("ReplicatedStorage")
@@ -14,9 +15,6 @@ local SettingsModule = require(RS.UI.Menus.MainGameGui.Settings)
 
 -- Combat Actions
 local m1Action = RS.Inputs.Combat.M1
-
--- Remotes
-local AttackRemote = RS.Remotes.AttackRemote
 
 -- Animations
 local AnimationLoader = require(RS.Utils.AnimationLoader)

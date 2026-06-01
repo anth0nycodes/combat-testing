@@ -4,7 +4,7 @@ type Config = {
 	Combo: number,
 	ComboResetTime: number,
 	IsAttacking: boolean,
-	NextAttackTime: number,
+	ComboBreakTime: number,
 	LastAttackTime: number,
 }
 

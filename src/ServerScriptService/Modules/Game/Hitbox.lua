@@ -1,12 +1,6 @@
 --!strict
 local HitboxServerModule = {}
 
--- Game Services
-local RS = game:GetService("ReplicatedStorage")
-
--- Remotes
-local AttackRemote = RS.Remotes.AttackRemote
-
 function HitboxServerModule.CreateHitbox(player: Player, isHitboxChecked: BoolValue)
 	local character = player.Character or player.CharacterAdded:Wait()
 	local humanoidRootPart = character:FindFirstChild("HumanoidRootPart") :: BasePart
