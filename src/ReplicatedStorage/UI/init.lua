@@ -1,7 +1,7 @@
 --!strict
 
 -- UIs
-local LoadingScreen = require(script.LoadingScreen.LoadingScreen)
+local LoadingScreen = require(script.GameScreens.LoadingScreen)
 
 return function()
 	-- LoadingScreen handles main menu, then main menu handles main game GUIs
