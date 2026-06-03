@@ -9,7 +9,7 @@ for _, service in services:GetChildren() do
 			local module = require(serverModuleScript) :: any
 			module.Init()
 		end)
-		
+
 		if not success then
 			warn(`Error initializing {serverModuleScript}: {result}`)
 			return
