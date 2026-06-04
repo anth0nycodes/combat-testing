@@ -6,14 +6,12 @@ local CombatServiceClient = {} :: Types.CombatServiceClientType
 -- Game Services
 local RS = game:GetService("ReplicatedStorage")
 
--- Fighter Config
-local Fighters = RS.Shared.Fighters
-local fighter = Fighters.Brawler -- Default to Brawler for now, can change later when implementing fighter selection logic
-local fighterConfigModule = require(fighter)
-local fighterConfig = fighterConfigModule.FighterConfig
-
 -- Modules
 local SettingsModule = require(RS.UI.Menus.MainGameGui.Settings)
+local FighterConfigModule = require(RS.Utils.FighterConfig)
+
+-- Fighter Config
+local fighterConfig = FighterConfigModule.get()
 
 -- Remotes
 local AttackRemote = RS.Remotes.AttackRemote

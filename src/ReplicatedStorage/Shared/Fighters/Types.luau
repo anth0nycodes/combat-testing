@@ -1,5 +1,24 @@
 local Types = {}
 
+type BoxHitboxConfig = {
+	HitboxType: "Box",
+	Size: Vector3,
+	CFrame: CFrame,
+}
+
+type WeaponHitboxConfig = {
+	HitboxType: "Weapon",
+	WeaponPart: BasePart,
+}
+
+type ProjectileHitboxConfig = {
+	HitboxType: "Projectile",
+	Speed: number,
+	Direction: Vector3,
+}
+
+type HitboxConfig = BoxHitboxConfig | WeaponHitboxConfig | ProjectileHitboxConfig
+
 type FighterConfigType = {
 	Animations: { Animation },
 	SFX: {
@@ -11,8 +30,7 @@ type FighterConfigType = {
 		Heavy: number,
 	},
 	MaxComboCount: number,
-	HitboxType: "Box" | "Weapon" | "Projectile",
-	CreateHitbox: (player: Player, isHitboxChecked: boolean) -> { Humanoid }?,
+	Hitbox: HitboxConfig,
 }
 
 export type ConfigType = {
