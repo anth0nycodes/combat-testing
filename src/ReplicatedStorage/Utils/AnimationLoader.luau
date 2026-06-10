@@ -1,25 +1,16 @@
 --!strict
 local AnimationLoader = {}
-
--- Game Services
-local Players = game:GetService("Players")
-
--- Player
-local player = Players.LocalPlayer
-assert(player, "AnimationLoader.LoadAnimation can only be called from a Client script!")
-local character: Model
 local humanoid: Humanoid
 
-local function onCharacterAdded(newCharacter: Model)
-	character = newCharacter
-	humanoid = character:WaitForChild("Humanoid") :: Humanoid
+-- Utils
+local CharacterLoader = require(script.Parent.CharacterLoader)
+
+local function onCharacterAdded(_, newHumanoid)
+	humanoid = newHumanoid
 end
 
 function AnimationLoader.Init()
-	if player.Character then
-		onCharacterAdded(player.Character)
-	end
-	player.CharacterAdded:Connect(onCharacterAdded)
+	CharacterLoader.Init(onCharacterAdded)
 end
 
 function AnimationLoader.LoadAnimation(animation: Animation): AnimationTrack

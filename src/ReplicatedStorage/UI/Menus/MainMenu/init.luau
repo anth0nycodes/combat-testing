@@ -66,7 +66,6 @@ end
 local isCreditsOpen = false
 
 function MainMenu.Init()
-	combatContext.Enabled = false
 	playButtonAction.TapAndClick.UIButton = playButton
 	creditsButtonAction.TapAndClick.UIButton = creditsButton
 	mainMenuGui.Parent = playerGui

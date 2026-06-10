@@ -10,6 +10,10 @@ local RS = game:GetService("ReplicatedStorage")
 local HitboxClientModule = require(RS.Shared.Modules.Game.Hitbox)
 local FighterConfigModule = require(RS.Utils.FighterConfig)
 
+-- Player
+local character: Model
+local humanoid: Humanoid
+
 -- Fighter Config
 local fighterConfig = FighterConfigModule.get()
 
@@ -19,6 +23,7 @@ local BlockRemote = RS.Remotes.BlockRemote
 
 -- Utils
 local AnimationLoader = require(RS.Utils.AnimationLoader)
+local CharacterLoader = require(RS.Utils.CharacterLoader)
 
 -- Combat Actions
 local m1Action = RS.Inputs.Combat.M1
@@ -39,7 +44,13 @@ CombatServiceClient.Config = {
 	LastAttackTime = 0,
 }
 
+local function onCharacterAdded(newCharacter: Model, newHumanoid: Humanoid)
+	character = newCharacter
+	humanoid = newHumanoid
+end
+
 function CombatServiceClient.Init()
+	CharacterLoader.Init(onCharacterAdded)
 	AnimationLoader.Init()
 	CombatServiceClient.BindEvents()
 end
@@ -47,10 +58,13 @@ end
 function CombatServiceClient.BindEvents()
 	m1Action.Pressed:Connect(function()
 		local now = DateTime.now().UnixTimestampMillis / 1000
-		if CombatServiceClient.Config.IsAttacking then
-			return
-		end
-		if now < CombatServiceClient.Config.ComboBreakTime then
+		if
+			humanoid.Health <= 0
+			or CombatServiceClient.Config.IsAttacking
+			or CombatServiceClient.Config.IsStunned
+			or CombatServiceClient.Config.IsBlocking
+			or now < CombatServiceClient.Config.ComboBreakTime
+		then
 			return
 		end
 
@@ -102,8 +116,9 @@ function CombatServiceClient.Attack()
 
 	currentAnimationTrack:Play()
 	currentAnimationTrack:GetMarkerReachedSignal("Hit"):Connect(function()
+		local humanoidRootPart = character:WaitForChild("HumanoidRootPart") :: BasePart
 		strikeSound:Play()
-		HitboxClientModule.CreateHitbox()
+		HitboxClientModule.CreateHitbox(humanoidRootPart)
 		AttackRemote:FireServer(combo)
 	end)
 	currentAnimationTrack.Stopped:Wait()
@@ -111,6 +126,9 @@ function CombatServiceClient.Attack()
 end
 
 function CombatServiceClient.Block()
+	if CombatServiceClient.Config.IsStunned or CombatServiceClient.Config.IsAttacking or humanoid.Health <= 0 then
+		return
+	end
 	task.wait(0.0375) -- Small delay to prevent blocking immediately after attacking
 	if not blockAction:GetState() then -- Bail if player released block during startup delay
 		return

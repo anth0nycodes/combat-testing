@@ -18,6 +18,9 @@ local playerGui = player.PlayerGui
 -- Modules
 local CombatServiceClient = require(RS.Shared.Services.CombatService.CombatServiceClient)
 
+-- Utils
+local CharacterLoader = require(RS.Utils.CharacterLoader)
+
 -- GUIs
 local playerHudGuiTemplate = RS.Assets.GUIs.PlayerHudGui :: Types.PlayerHudGui
 local playerHudGui = playerHudGuiTemplate:Clone()
@@ -46,9 +49,9 @@ local function updateBlockStat()
 	blockPercentage.Text = `{blockValue}%`
 end
 
-local function onCharacterAdded(newCharacter: Model)
+local function onCharacterAdded(newCharacter: Model, newHumanoid: Humanoid)
 	character = newCharacter
-	humanoid = character:WaitForChild("Humanoid") :: Humanoid
+	humanoid = newHumanoid
 	updateHealthStat()
 	updateBlockStat()
 	humanoid.HealthChanged:Connect(updateHealthStat)
@@ -57,10 +60,7 @@ end
 
 function PlayerHudModule.Init()
 	playerHudGui.Parent = playerGui
-	if player.Character then
-		onCharacterAdded(player.Character)
-	end
-	player.CharacterAdded:Connect(onCharacterAdded)
+	CharacterLoader.Init(onCharacterAdded)
 end
 
 return PlayerHudModule

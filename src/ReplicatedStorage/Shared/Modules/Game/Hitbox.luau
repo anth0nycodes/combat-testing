@@ -3,13 +3,6 @@ local HitboxClientModule = {}
 
 -- Game Services
 local RS = game:GetService("ReplicatedStorage")
-local Players = game:GetService("Players")
-
--- Player
-local player = Players.LocalPlayer
-assert(player, "Player is not defined")
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart") :: BasePart
 
 -- Modules
 local SettingsModule = require(RS.UI.Menus.MainGameGui.Settings)
@@ -18,11 +11,11 @@ local FighterConfigModule = require(RS.Utils.FighterConfig)
 -- Fighter Config
 local fighterConfig = FighterConfigModule.get()
 
-function HitboxClientModule.CreateHitbox()
+function HitboxClientModule.CreateHitbox(humanoidRootPart: BasePart)
 	if fighterConfig.Hitbox.HitboxType == "Box" then
-		local hitboxCFrame = humanoidRootPart.CFrame * fighterConfig.Hitbox.CFrame
-		local hitboxSize = fighterConfig.Hitbox.Size
 		if SettingsModule.Config.isHitboxChecked then
+			local hitboxCFrame = humanoidRootPart.CFrame * fighterConfig.Hitbox.CFrame
+			local hitboxSize = fighterConfig.Hitbox.Size
 			local hitbox = Instance.new("Part")
 			hitbox.Size = hitboxSize
 			hitbox.Color = Color3.new(1, 0, 0)
