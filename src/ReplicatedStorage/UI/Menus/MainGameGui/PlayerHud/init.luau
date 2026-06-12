@@ -16,10 +16,14 @@ local humanoid: Humanoid
 local playerGui = player.PlayerGui
 
 -- Modules
-local CombatServiceClient = require(RS.Shared.Services.CombatService.CombatServiceClient)
+local FighterConfigModule = require(RS.Utils.FighterConfig)
 
 -- Utils
 local CharacterLoader = require(RS.Utils.CharacterLoader)
+local AnimationLoader = require(RS.Utils.AnimationLoader)
+
+-- Fighter Config
+local fighterConfig = FighterConfigModule.get()
 
 -- SFX
 local HealthDrainSFX = RS.Assets.SFX.HealthDrain :: Sound
@@ -48,7 +52,9 @@ local function updateHealthStat()
 	local currentPlayerHealthPercentage = math.round(currentPlayerHealthRatio * 100)
 
 	if currentPlayerHealth < previousPlayerHealth then
+		local knockbackTrack = AnimationLoader.LoadAnimation(fighterConfig.Animations.KnockbackAnimation)
 		HealthDrainSFX:Play()
+		knockbackTrack:Play()
 	end
 	previousPlayerHealth = currentPlayerHealth
 

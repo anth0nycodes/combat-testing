@@ -25,6 +25,7 @@ type FighterConfigType = {
 		BlockAnimation: Animation,
 		BlockBreakAnimation: Animation,
 		ParryStunAnimation: Animation,
+		KnockbackAnimation: Animation,
 	},
 	Stuns: {
 		BlockBreakDuration: number,

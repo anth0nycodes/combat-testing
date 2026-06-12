@@ -24,6 +24,7 @@ Config.FighterConfig = {
 		BlockAnimation = BrawlerAnimations.Block,
 		BlockBreakAnimation = BrawlerAnimations.BlockBreak,
 		ParryStunAnimation = BrawlerAnimations.ParryStun,
+		KnockbackAnimation = BrawlerAnimations.Knockback,
 	},
 	Stuns = {
 		BlockBreakDuration = 2,

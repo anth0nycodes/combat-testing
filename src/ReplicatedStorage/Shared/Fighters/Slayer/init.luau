@@ -27,6 +27,7 @@ Config.FighterConfig = {
 		BlockAnimation = SlayerAnimations.Block,
 		BlockBreakAnimation = SlayerAnimations.BlockBreak,
 		ParryStunAnimation = SlayerAnimations.ParryStun,
+		KnockbackAnimation = SlayerAnimations.Knockback,
 	},
 	Stuns = {
 		BlockBreakDuration = 2,
